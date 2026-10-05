@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Test Vocacional</title>
+  <meta name="description" content="Respondé preguntas de opción múltiple y descubrí qué áreas y carreras van con vos.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="card">
+    <!-- Pantalla de inicio -->
+    <section id="screen-start" class="screen active">
+      <p class="eyebrow">Test vocacional</p>
+      <h1>¿Qué podés estudiar o hacer?</h1>
+      <p class="lead">
+        Respondé <span id="total-questions">15</span> preguntas de opción múltiple.
+        No hay respuestas correctas ni incorrectas: elegí la que más te represente.
+      </p>
+      <button id="btn-start" class="btn primary">Empezar el test</button>
+      <p class="hint">Dura unos 3 minutos.</p>
+    </section>
+
+    <!-- Pantalla de preguntas -->
+    <section id="screen-quiz" class="screen">
+      <div class="progress-row">
+        <span id="progress-text">Pregunta 1 de 15</span>
+        <div class="progress"><div id="progress-bar"></div></div>
+      </div>
+      <h2 id="question-text"></h2>
+      <div id="options" class="options" role="radiogroup"></div>
+      <div class="nav">
+        <button id="btn-back" class="btn ghost">← Anterior</button>
+      </div>
+    </section>
+
+    <!-- Pantalla de resultados -->
+    <section id="screen-result" class="screen">
+      <p class="eyebrow">Tu resultado</p>
+      <h1 id="result-title"></h1>
+      <p id="result-summary" class="lead"></p>
+
+      <div id="result-top"></div>
+
+      <h3>Tu perfil completo</h3>
+      <div id="result-bars" class="bars"></div>
+
+      <p class="hint">
+        Este test es orientativo y se basa en el modelo RIASEC de intereses vocacionales.
+        Para una decisión importante, charlalo con un orientador vocacional.
+      </p>
+      <button id="btn-restart" class="btn primary">Hacer el test de nuevo</button>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
