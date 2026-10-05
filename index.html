@@ -4,55 +4,116 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Test Vocacional</title>
-  <meta name="description" content="Respondé preguntas de opción múltiple y descubrí qué áreas y carreras van con vos.">
+  <meta name="description" content="Test vocacional de opción múltiple: descubrí qué carreras van con vos, cuánto duran, dónde estudiarlas y qué pasos seguir.">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <main class="card">
-    <!-- Pantalla de inicio -->
+    <!-- Inicio -->
     <section id="screen-start" class="screen active">
       <p class="eyebrow">Test vocacional</p>
-      <h1>¿Qué podés estudiar o hacer?</h1>
+      <h1>¿Qué podés estudiar?</h1>
       <p class="lead">
-        Respondé <span id="total-questions">15</span> preguntas de opción múltiple.
-        No hay respuestas correctas ni incorrectas: elegí la que más te represente.
+        Respondé <strong id="total-questions"></strong> preguntas de opción múltiple sobre lo que te gusta,
+        lo que te sale bien y cómo te imaginás trabajando. Al final vas a ver:
       </p>
-      <button id="btn-start" class="btn primary">Empezar el test</button>
-      <p class="hint">Dura unos 3 minutos.</p>
+      <ul class="checklist">
+        <li>Tu perfil vocacional y tus fortalezas</li>
+        <li>Las carreras que más van con vos, entre más de 60, con duración, materias, salida laboral y dónde estudiarlas</li>
+        <li>Opciones cortas para empezar a trabajar rápido</li>
+        <li>Un plan con pasos concretos para decidir</li>
+      </ul>
+      <label class="field">
+        <span>¿Cómo te llamás? <em>(opcional)</em></span>
+        <input id="name-input" type="text" maxlength="40" autocomplete="given-name" placeholder="Tu nombre">
+      </label>
+      <div class="start-actions">
+        <button id="btn-start" class="btn primary">Empezar el test</button>
+        <button id="btn-resume" class="btn secondary" hidden>Seguir donde quedé</button>
+        <button id="btn-see-result" class="btn secondary" hidden>Ver mi resultado</button>
+      </div>
+      <p class="hint">Dura unos 8 minutos. Tus respuestas se guardan en este dispositivo, así que podés cortar y seguir después.</p>
     </section>
 
-    <!-- Pantalla de preguntas -->
+    <!-- Preguntas -->
     <section id="screen-quiz" class="screen">
       <div class="progress-row">
-        <span id="progress-text">Pregunta 1 de 15</span>
+        <div class="progress-labels">
+          <span id="section-label"></span>
+          <span id="progress-text"></span>
+        </div>
         <div class="progress"><div id="progress-bar"></div></div>
       </div>
+      <p id="section-subtitle" class="section-subtitle"></p>
       <h2 id="question-text"></h2>
-      <div id="options" class="options" role="radiogroup"></div>
+      <p id="multi-hint" class="multi-hint" hidden></p>
+      <div id="options" class="options"></div>
       <div class="nav">
         <button id="btn-back" class="btn ghost">← Anterior</button>
+        <button id="btn-next" class="btn primary" hidden>Siguiente →</button>
       </div>
     </section>
 
-    <!-- Pantalla de resultados -->
+    <!-- Resultados -->
     <section id="screen-result" class="screen">
       <p class="eyebrow">Tu resultado</p>
       <h1 id="result-title"></h1>
+      <div id="result-code" class="code-chips"></div>
       <p id="result-summary" class="lead"></p>
 
-      <div id="result-top"></div>
+      <nav class="toc no-print" aria-label="Secciones del resultado">
+        <a href="#sec-perfil">Perfil</a>
+        <a href="#sec-carreras">Carreras</a>
+        <a href="#sec-cortas">Opciones cortas</a>
+        <a href="#sec-favoritas">Favoritas</a>
+        <a href="#sec-plan">Plan de acción</a>
+      </nav>
 
-      <h3>Tu perfil completo</h3>
-      <div id="result-bars" class="bars"></div>
+      <section id="sec-perfil" class="result-section">
+        <h2>Tu perfil</h2>
+        <div id="profile-text"></div>
+        <div id="result-bars" class="bars"></div>
+      </section>
 
-      <p class="hint">
-        Este test es orientativo y se basa en el modelo RIASEC de intereses vocacionales.
-        Para una decisión importante, charlalo con un orientador vocacional.
+      <section id="sec-carreras" class="result-section">
+        <h2>Las carreras que más van con vos</h2>
+        <p class="hint">Ordenadas por compatibilidad. Tocá <strong>Ver detalles</strong> para saber cómo es el día a día, las materias y dónde estudiarla. Marcá con ☆ las que te interesen.</p>
+        <div id="careers-list"></div>
+      </section>
+
+      <section id="sec-cortas" class="result-section">
+        <h2>Para empezar rápido (2 años o menos)</h2>
+        <p class="hint">Formaciones cortas que van con tu perfil. Sirven para trabajar pronto o para probar el área antes de una carrera larga.</p>
+        <div id="short-list"></div>
+      </section>
+
+      <section id="sec-favoritas" class="result-section">
+        <h2>Tus favoritas</h2>
+        <div id="favs"></div>
+      </section>
+
+      <section id="sec-plan" class="result-section">
+        <h2>Tu plan de acción</h2>
+        <ol id="plan" class="plan"></ol>
+      </section>
+
+      <p class="hint disclaimer">
+        Este test es orientativo: se basa en el modelo RIASEC de intereses vocacionales y en tus preferencias.
+        Las duraciones e instituciones son aproximadas: confirmalas siempre en la web oficial de cada lugar.
+        Para una decisión importante, sumá la ayuda de un/a orientador/a vocacional.
       </p>
-      <button id="btn-restart" class="btn primary">Hacer el test de nuevo</button>
+
+      <div class="result-actions no-print">
+        <button id="btn-print" class="btn primary">Guardar en PDF / Imprimir</button>
+        <button id="btn-share" class="btn secondary">Compartir por WhatsApp</button>
+        <button id="btn-copy" class="btn secondary">Copiar resumen</button>
+        <button id="btn-restart" class="btn ghost">Hacer el test de nuevo</button>
+      </div>
+      <p id="copy-feedback" class="hint" role="status"></p>
     </section>
   </main>
 
+  <script src="data.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
